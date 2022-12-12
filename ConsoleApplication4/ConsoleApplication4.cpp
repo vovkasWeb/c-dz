@@ -24,14 +24,40 @@ void deleteArr(int* arr)
 }
 
 int* addNewElement(int* arr, int length) {
-	int* dest = new int[length + 1], i;
-	for (i = 0, dest[length] = 0; i < length; i++)
-		dest[length] += (dest[i] = arr[i]);
+	int* dest = new int[length + 1];
+	for (int i = 0; i < length; i++)
+	{
+		dest[i] = arr[i];
+	}
+	dest[length] = rand() % 10;
 	delete[] arr;
 	n++;
 	return dest;
 }
-int * addElementOnIndex(int* arr, int length) {
+
+int* intElement(int* arr, int length, int index) {
+	int* newArray = new int[++length];
+	for (int i = 0; i < index; ++i) 
+		newArray[i] = arr[i];
+	newArray[index] = rand() % 10;
+	for (int i = index; i < length - 1; ++i) 
+		newArray[i + 1] = arr[i];
+	delete[]arr; 
+	arr = newArray;
+	n++;
+	return newArray;
+}
+int* deleteElement(int* arr, int length, int index) {
+	int* newArray = new int[--length];
+	for (int i = 0; i < index; ++i)
+		newArray[i] = arr[i];
+	for (int i = index; i < length; ++i)
+		newArray[i] = arr[i+1];
+	delete[]arr;
+	arr = newArray;
+	n--;
+	return newArray;
+}
 
 int main()
 {
@@ -41,6 +67,10 @@ int main()
 	initArr(array, n);
 	printArr(array, n);
 	array = addNewElement(array, n);
+	printArr(array, n);
+	array = intElement(array,n,1);
+	printArr(array, n);
+	array = deleteElement(array, n, 4);
 	printArr(array, n);
 	deleteArr(array);
 	
